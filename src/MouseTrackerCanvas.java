@@ -18,12 +18,5 @@ public class MouseTrackerCanvas extends Canvas {
         gc = getGraphicsContext2D();
         gc.setFill(Color.TRANSPARENT);
         gc.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-//        this.setOnMouseDragged(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                gc.setFill(Color.BLACK);
-//                gc.fillRect(event.getX(), event.getY(), 10, 10);
-//            }
-//        });
     }
 }

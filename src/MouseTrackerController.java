@@ -13,6 +13,5 @@ public class MouseTrackerController extends VBox {
 	public MouseTrackerController(Button btnClear) {
 		this.btnClear = btnClear;
 		this.getChildren().addAll(btnClear);
-
 	}
 }
