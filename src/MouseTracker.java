@@ -1,9 +1,12 @@
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -13,7 +16,8 @@ public class MouseTracker extends Application {
 
     private static MouseTrackerCanvas mtCanvas;
     private static MouseTrackerController mtController;
-    private HBox rootNode;
+    private static HBox rootNode;
+    private int penWidthHight;
 
     public void start(Stage myStage) {
         // Give the stage a title.
@@ -44,12 +48,35 @@ public class MouseTracker extends Application {
     private MouseTrackerController getMouseTrackerController() {
         // Create a button "Clear"
         Button btnClear = new Button("Clear");
-        mtController = new MouseTrackerController(btnClear);
+
+        Slider sliderPenWidthHight = new Slider(0, 100, 50);
+        mtController.getSliderPenWidthHight().valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                penWidthHight = (int) newValue;
+            }
+        });
+
+
+
+
+
+//        {
+//                    double v = new_val.doubleValue() / 255;
+//                    values[finalI] = v;
+//                    color = new Color(values[0], values[1], values[2], opacity);
+//                    rectangle.setFill(color);
+//                    gridPane.getChildren().remove(lblValues255[finalI]);
+//                    lblValues255[finalI] = new Label(Double.toString(Math.round(values[finalI] * 255)));
+//                    lblValues255[finalI].setMinWidth(valuesBlockMinWidth); //TODO Do we need this line?
+//                    gridPane.add(lblValues255[finalI], 1, finalI);
+//                }
+
+        mtController = new MouseTrackerController(btnClear, sliderPenWidthHight);
         mtController.getBtnClear().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 //TODO Clear the MouseTrackerCanvas
-                System.out.println("mtController.getBtnClear().setOnAction");
                 rootNode.getChildren().remove(mtCanvas);
                 mtCanvas = getMouseTrackerCanvas();
                 rootNode.getChildren().add(mtCanvas);
@@ -64,7 +91,8 @@ public class MouseTracker extends Application {
             @Override
             public void handle(MouseEvent event) {
                 mtCanvas.getGc().setFill(Color.BLACK);
-                mtCanvas.getGc().fillRect(event.getX(), event.getY(), 10, 10);
+                penWidthHight = 10;
+                mtCanvas.getGc().fillRect(event.getX(), event.getY(), penWidthHight, penWidthHight);
             }
         });
         return mtCanvas;
