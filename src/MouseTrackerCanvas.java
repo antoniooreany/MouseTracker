@@ -1,11 +1,29 @@
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class MouseTrackerCanvas extends Canvas {
 
-	private static final int CANVASWIDTH = 600;
-	private static final int CANVASHEIGHT = 600;
-	
-	public MouseTrackerCanvas() {
-		super(CANVASWIDTH, CANVASHEIGHT);
-	}
+    private static final int CANVAS_WIDTH = 600;
+    private static final int CANVAS_HEIGHT = 600;
+
+    private final GraphicsContext gc;
+
+    public GraphicsContext getGc() {
+        return gc;
+    }
+
+    public MouseTrackerCanvas() {
+        super(CANVAS_WIDTH, CANVAS_HEIGHT);
+        gc = getGraphicsContext2D();
+        gc.setFill(Color.TRANSPARENT);
+        gc.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+//        this.setOnMouseDragged(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                gc.setFill(Color.BLACK);
+//                gc.fillRect(event.getX(), event.getY(), 10, 10);
+//            }
+//        });
+    }
 }
