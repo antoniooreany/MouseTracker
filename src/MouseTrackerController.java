@@ -1,17 +1,16 @@
-import javafx.event.*;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class MouseTrackerController extends VBox {
-	
-	private Button btnClear = null;
+class MouseTrackerController extends VBox {
 
-	public Button getBtnClear() {
-		return btnClear;
-	}
+    private Button btnClear;
 
-	public MouseTrackerController(Button btnClear) {
-		this.btnClear = btnClear;
-		this.getChildren().addAll(btnClear);
-	}
+    Button getBtnClear() {
+        return btnClear;
+    }
+
+    MouseTrackerController(Button btnClear) {
+        this.btnClear = btnClear;
+        this.getChildren().addAll(btnClear);
+    }
 }

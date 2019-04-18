@@ -1,10 +1,7 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -13,7 +10,7 @@ public class MouseTracker extends Application {
 
     private static MouseTrackerCanvas mtCanvas;
     private static MouseTrackerController mtController;
-    private HBox rootNode;
+    private static HBox rootNode;
 
     public void start(Stage myStage) {
         // Give the stage a title.
@@ -23,10 +20,10 @@ public class MouseTracker extends Application {
         rootNode = new HBox(10);
         rootNode.setPadding(new Insets(10, 10, 10, 10)); // Gaps at the outside borders
 
-        // Put the button "Clear" into the mtController
+        // mtController initialization
         mtController = getMouseTrackerController();
 
-        // Create mtCanvas
+        // mtCanvas initialization
         mtCanvas = getMouseTrackerCanvas();
 
         // Create a scene.
@@ -45,27 +42,19 @@ public class MouseTracker extends Application {
         // Create a button "Clear"
         Button btnClear = new Button("Clear");
         mtController = new MouseTrackerController(btnClear);
-        mtController.getBtnClear().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //TODO Clear the MouseTrackerCanvas
-                System.out.println("mtController.getBtnClear().setOnAction");
-                rootNode.getChildren().remove(mtCanvas);
-                mtCanvas = getMouseTrackerCanvas();
-                rootNode.getChildren().add(mtCanvas);
-            }
+        mtController.getBtnClear().setOnAction(event -> {
+            rootNode.getChildren().remove(mtCanvas);
+            mtCanvas = getMouseTrackerCanvas();
+            rootNode.getChildren().add(mtCanvas);
         });
         return mtController;
     }
 
     private MouseTrackerCanvas getMouseTrackerCanvas() {
-        mtCanvas = new MouseTrackerCanvas();
-        mtCanvas.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mtCanvas.getGc().setFill(Color.BLACK);
-                mtCanvas.getGc().fillRect(event.getX(), event.getY(), 10, 10);
-            }
+        mtCanvas = new MouseTrackerCanvas(600, 600);
+        mtCanvas.setOnMouseDragged(event -> {
+            mtCanvas.getGc().setFill(Color.BLACK);
+            mtCanvas.getGc().fillRect(event.getX(), event.getY(), 10, 10);
         });
         return mtCanvas;
     }
