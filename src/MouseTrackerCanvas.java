@@ -6,7 +6,7 @@ class MouseTrackerCanvas extends Canvas {
 
     private final GraphicsContext gc;
 
-    GraphicsContext getGc() {
+    private GraphicsContext getGc() {
         return gc;
     }
 
@@ -14,6 +14,13 @@ class MouseTrackerCanvas extends Canvas {
         super(canvas_width, canvas_height);
         gc = getGraphicsContext2D();
         gc.setFill(Color.TRANSPARENT);
-        gc.fillRect(0, 0, canvas_width, canvas_height);
+        this.setOnMouseDragged(event -> {
+            this.getGc().setFill(Color.BLACK);
+            this.getGc().fillOval(event.getX(), event.getY(), 10, 10);
+        });
+    }
+
+    void clear() {
+        gc.clearRect(0,0, this.getWidth(), this.getHeight());
     }
 }
